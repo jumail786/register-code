@@ -48,26 +48,39 @@
     <div class="container">
         <h1>Registration Code Verification</h1>
         <input type="text" id="code" placeholder="Enter your registration code">
+        <input type="text" id="mobile" placeholder="Enter your mobile number">
         <button onclick="verifyCode()">Verify</button>
         <p id="message"></p>
     </div>
 
     <script>
-        const validCodes = [
-            "CODE1", "CODE2", "CODE3", "CODE4", "CODE5",
-            "CODE6", "CODE7", "CODE8", "CODE9", "CODE10" // Replace with your actual codes
-        ];
+        const registrations = {
+            "CODE1": "1234567890",
+            "CODE2": "9876543210",
+            // ... (Add your 30 other code/mobile pairs here) ...
+            "CODE32": "2121212121"
+        };
 
-        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSdG24HxZ9JRmPgnI3EymJmIrWzbKhchUjthyt-xstCJn4T3XQ/viewform?usp=pp_url"; // Replace with your Google Form link
+        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSdG24HxZ9JRmPgnI3EymJmIrWzbKhchUjthyt-xstCJn4T3XQ/viewform?usp=pp_url";
 
         function verifyCode() {
             const enteredCode = document.getElementById("code").value.toUpperCase();
+            const enteredMobile = document.getElementById("mobile").value;
             const messageElement = document.getElementById("message");
 
-            if (validCodes.includes(enteredCode)) {
-                window.location.href = googleFormLink;
+            if (registrations[enteredCode] && registrations[enteredCode] === enteredMobile) {
+                const usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
+
+                if (usedCodes.includes(enteredCode)) {
+                    messageElement.textContent = "This code has already been used.";
+                    messageElement.style.color = "red";
+                } else {
+                    usedCodes.push(enteredCode);
+                    localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
+                    window.location.href = googleFormLink;
+                }
             } else {
-                messageElement.textContent = "Invalid registration code.";
+                messageElement.textContent = "Invalid code or mobile number.";
                 messageElement.style.color = "red";
             }
         }
