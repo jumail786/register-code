@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Code Verification</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registration Code Verification</h1>
+        <input type="text" id="code" placeholder="Enter your registration code">
+        <button onclick="verifyCode()">Verify</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const validCodes = [
+            "CODE1", "CODE2", "CODE3", "CODE4", "CODE5",
+            "CODE6", "CODE7", "CODE8", "CODE9", "CODE10" // Replace with your actual codes
+        ];
+
+        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSdG24HxZ9JRmPgnI3EymJmIrWzbKhchUjthyt-xstCJn4T3XQ/viewform?usp=pp_url"; // Replace with your Google Form link
+
+        function verifyCode() {
+            const enteredCode = document.getElementById("code").value.toUpperCase();
+            const messageElement = document.getElementById("message");
+
+            if (validCodes.includes(enteredCode)) {
+                window.location.href = googleFormLink;
+            } else {
+                messageElement.textContent = "Invalid registration code.";
+                messageElement.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
